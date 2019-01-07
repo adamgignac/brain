@@ -1,0 +1,16 @@
+{% extends "mapping/base.html" %}
+{% block page_name %}
+    {% if object.pk %}
+    Editing {{ object.type|title }}: {{ object }}
+    {% else %}
+    Add Item
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<form action="" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input class="btn btn-primary" type="submit" value="{% if object.pk %}Save{% else %}Create{% endif %}" />
+</form>
+{% endblock %}

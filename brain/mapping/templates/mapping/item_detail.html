@@ -1,0 +1,57 @@
+{% extends "mapping/base.html" %}
+
+{% block page_name %}{{ object.type|title }}: {{ object }}{% endblock %}
+{% block page_description %}
+    {% if object.notes %}
+        <p>{{ object.notes }}</p>
+    {% endif %}
+{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-sm-3">
+        <div class="box">
+            <div class="box-header with-border">
+                <h2 class="box-title">Direct Dependencies ({{ object.dependencies.count }})</h2>
+            </div>
+            <div class="box-body">
+                {% regroup object.dependencies.all by type as dependencies %}
+                {% for type in dependencies %}
+                    <h5>{{ type.grouper }}</h5>
+                    <ul>
+                        {% for item in type.list %}
+                            <li><a href="{% url 'item-detail' item.pk %}">{{ item.label }}</a></li>
+                        {% endfor %}
+                    </ul>
+                {% empty %}
+                    <p>None</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="box">
+            <div class="box-header with-border">
+                <h2 class="box-title">Direct Supports ({{ object.direct_supports.count }})</h2>
+            </div>
+            <div class="box-body">
+                {% regroup object.direct_supports by type as supports %}
+                {% for type in supports %}
+                    <h5>{{ type.grouper }}</h5>
+                    <ul>
+                        {% for item in type.list %}
+                            <li><a href="{% url 'item-detail' item.pk %}">{{ item.label }}</a></li>
+                        {% endfor %}
+                    </ul>
+                {% empty %}
+                    <p>None</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block page_actions %}
+<a class="btn btn-primary btn-xs" href="{% url 'workspace-detail' object.workspace.pk %}">Back to workspace</a>
+<a class="btn btn-primary btn-xs" href="{% url 'update-item' object.pk %}">Edit</a>
+<a class="btn btn-danger btn-xs" href="{% url 'delete-item' object.pk %}">Delete</a>
+{% endblock %}

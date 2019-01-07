@@ -1,0 +1,10 @@
+{% extends "mapping/base.html" %}
+{% block page_name %}Create New Workspace{% endblock %}
+
+{% block content %}
+<form action="" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input class="btn btn-primary" type="submit" value="Create" />
+</form>
+{% endblock %}

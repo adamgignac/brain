@@ -1,0 +1,12 @@
+{% extends "mapping/base.html" %}
+{% block page_name %}Workspace: {{ object }}{% endblock %}
+{% block content %}
+{{ object.graphviz_graph|safe }}
+{% endblock %}
+
+{% block page_actions %}
+    {% if request.user.is_authenticated %}
+    <a class="btn btn-success btn-xs" href="{% url 'add-item' object.pk %}"><i class="fa fa-plus"></i> Add Item</a>
+    <a class="btn btn-danger btn-xs" href="{% url 'delete-workspace' object.pk %}"><i class="fa fa-trash"></i> Delete</a>
+    {% endif %}
+{% endblock %}

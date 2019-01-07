@@ -1,0 +1,11 @@
+{% extends "adminlte/lib/_main_header.html" %}
+{% block logo_text %}<b>Mind</b>Map{% endblock %}
+{% block logo_text_small %}<b>M</b>M{% endblock %}
+
+{% block header_dropdowns %}
+{% if request.user.is_authenticated %}
+<li><a href="{% url 'logout' %}?next=/">Log Out (agignac)</a></li>
+{% else %}
+<li><a href="{% url 'login' %}?next={{ request.path }}">Log In</a></li>
+{% endif %}
+{% endblock %}
