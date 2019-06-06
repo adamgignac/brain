@@ -16,7 +16,7 @@ python_version = "3.5"
 
 [packages]
 
-django = ">=2.0.11"
+django = ">=2.1.5"
 "django-adminlte2" = "*"
 graphviz = "*"
 "beautifulsoup4" = "*"
