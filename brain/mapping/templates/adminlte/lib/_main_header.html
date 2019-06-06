@@ -4,7 +4,7 @@
 
 {% block header_dropdowns %}
 {% if request.user.is_authenticated %}
-<li><a href="{% url 'logout' %}?next=/">Log Out (agignac)</a></li>
+<li><a href="{% url 'logout' %}?next=/">Log Out ({{ user.username }})</a></li>
 {% else %}
 <li><a href="{% url 'login' %}?next={{ request.path }}">Log In</a></li>
 {% endif %}
