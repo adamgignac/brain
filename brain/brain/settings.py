@@ -25,7 +25,7 @@ SECRET_KEY = 'wz&qlj(qu0%yavxr7_a+326m5l-*=b9h2w_0ty&k0t_58%^vg&'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["adam.unstable", "localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition

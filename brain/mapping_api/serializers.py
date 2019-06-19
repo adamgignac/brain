@@ -8,7 +8,7 @@ class ItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Item
-        fields = ("type", "label", "dependencies", "notes")
+        fields = ("type", "label", "dependencies", "notes", "workspace")
 
 
 class WorkspaceSerializer(serializers.ModelSerializer):

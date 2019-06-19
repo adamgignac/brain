@@ -22,6 +22,7 @@ from django.contrib.auth.views import LoginView, LogoutView
 
 router = routers.DefaultRouter()
 router.register(r'workspaces', api_views.WorkspaceViewSet)
+router.register(r'items', api_views.ItemViewSet)
 
 urlpatterns = [
     path('', include(mapping.urls)),
