@@ -1,7 +1,9 @@
 {% extends "mapping/base.html" %}
 {% block page_name %}Workspace: {{ object }}{% endblock %}
 {% block content %}
+<div class="graph">
 {{ object.graphviz_graph|safe }}
+</div>
 {% endblock %}
 
 {% block page_actions %}
