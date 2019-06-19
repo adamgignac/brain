@@ -24,7 +24,7 @@ class Workspace(models.Model):
 
     def graphviz_graph(self):
         graph = Digraph(comment=self.label, format="svg")
-        for item in self.item_set.all():
+        for item in self.items.all():
             graph.node(str(item.pk), item.label,
                        shape=item.type.shape,
                        style="filled",
@@ -45,7 +45,7 @@ class ItemType(models.Model):
 
 
 class Item(models.Model):
-    workspace = models.ForeignKey(Workspace, on_delete=models.CASCADE)
+    workspace = models.ForeignKey(Workspace, on_delete=models.CASCADE, related_name='items')
     type = models.ForeignKey(ItemType, on_delete=models.CASCADE)
     label = models.CharField(max_length=1024)
     dependencies = models.ManyToManyField("self", blank=True,
