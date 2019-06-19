@@ -64,12 +64,36 @@ class Item(models.Model):
 
     def full_dependency_graph(self):
         graph = Digraph(comment=self.label + " Dependencies", format="svg")
-        # Breadth-first search
-        for item in self.dependencies.all():
-            continue
+        visited = [];
+        def dfs(start):
+            if start in visited:
+                return
+            visited.append(start)
+            graph.node(str(start.pk), start.label,
+                       shape=start.type.shape,
+                       style="filled",
+                       fillcolor=start.type.color,
+                       URL=start.get_absolute_url())
+            for neighbor in start.dependencies.all():
+                graph.edge(str(start.pk), str(neighbor.pk), dir="back")
+                dfs(neighbor)
+        dfs(self)
+        return BeautifulSoup(graph.pipe(), "lxml").find("svg") 
 
     def full_support_graph(self):
         graph = Digraph(comment=self.label + " Supports", format="svg")
-        # Breadth-first search
-        for item in self.direct_supports.all():
-            continue
+        visited = [];
+        def dfs(start):
+            if start in visited:
+                return
+            visited.append(start)
+            graph.node(str(start.pk), start.label,
+                       shape=start.type.shape,
+                       style="filled",
+                       fillcolor=start.type.color,
+                       URL=start.get_absolute_url())
+            for neighbor in start.direct_supports.all():
+                graph.edge(str(neighbor.pk), str(start.pk), dir="back")
+                dfs(neighbor)
+        dfs(self)
+        return BeautifulSoup(graph.pipe(), "lxml").find("svg")

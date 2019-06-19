@@ -8,43 +8,87 @@
 {% endblock %}
 {% block content %}
 <div class="row">
-    <div class="col-sm-3">
+    <div class="col-sm-6">
         <div class="box">
             <div class="box-header with-border">
                 <h2 class="box-title">Direct Dependencies ({{ object.dependencies.count }})</h2>
             </div>
             <div class="box-body">
-                {% regroup object.dependencies.all by type as dependencies %}
-                {% for type in dependencies %}
-                    <h5>{{ type.grouper }}</h5>
-                    <ul>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% regroup object.dependencies.all by type as dependencies %}
+                        {% for type in dependencies %}
                         {% for item in type.list %}
-                            <li><a href="{% url 'item-detail' item.pk %}">{{ item.label }}</a></li>
+                        <tr>
+                            <td>{{ type.grouper }}</td>
+                            <td><a href="{% url 'item-detail' item.pk %}">{{ item.label }}</a></td>
+                        </tr>
                         {% endfor %}
-                    </ul>
-                {% empty %}
-                    <p>None</p>
-                {% endfor %}
+                        {% empty %}
+                        <tr>
+                            <td colspan="2">None</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="box">
+            <div class="box-header with-border">
+                <h2 class="box-title">Full Dependency Tree</h2>
+            </div>
+            <div class="box-body">
+                <div class="graph">
+                    {{ object.full_dependency_graph|safe }}
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-sm-3">
+    <div class="col-sm-6">
         <div class="box">
             <div class="box-header with-border">
                 <h2 class="box-title">Direct Supports ({{ object.direct_supports.count }})</h2>
             </div>
             <div class="box-body">
-                {% regroup object.direct_supports by type as supports %}
-                {% for type in supports %}
-                    <h5>{{ type.grouper }}</h5>
-                    <ul>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% regroup object.direct_supports.all by type as supports %}
+                        {% for type in supports %}
                         {% for item in type.list %}
-                            <li><a href="{% url 'item-detail' item.pk %}">{{ item.label }}</a></li>
+                        <tr>
+                            <td>{{ type.grouper }}</td>
+                            <td><a href="{% url 'item-detail' item.pk %}">{{ item.label }}</a></td>
+                        </tr>
                         {% endfor %}
-                    </ul>
-                {% empty %}
-                    <p>None</p>
-                {% endfor %}
+                        {% empty %}
+                        <tr>
+                            <td colspan="2">None</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="box">
+            <div class="box-header with-border">
+                <h2 class="box-title">Full Support Tree</h2>
+            </div>
+            <div class="box-body">
+                <div class="graph">
+                    {{ object.full_support_graph|safe }}
+                </div>
             </div>
         </div>
     </div>
