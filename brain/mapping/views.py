@@ -74,19 +74,14 @@ class CreateItem(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         obj = form.save(commit=False)
-        obj.workspace = Workspace.objects.get(pk=self.kwargs['workspace'])
+        obj.workspace = Workspace.objects.get(slug=self.kwargs['workspace'])
         obj.save()
         return HttpResponseRedirect(obj.workspace.get_absolute_url())
 
 
 class UpdateItem(LoginRequiredMixin, UpdateView):
     model = Item
-    fields = ['label', 'notes', 'dependencies']
-
-    def get_form(self, form_class=None):
-        form = super().get_form(form_class=form_class)
-        form.fields['dependencies'].queryset = Item.objects.filter(workspace=self.object.workspace).order_by('type', 'label')
-        return form
+    fields = ['label', 'notes']
 
 
 class DeleteItem(LoginRequiredMixin, DeleteView):
