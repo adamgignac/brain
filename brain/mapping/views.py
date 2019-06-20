@@ -89,6 +89,11 @@ class UpdateItem(LoginRequiredMixin, UpdateView):
     model = Item
     fields = ['label', 'notes']
 
+    def get_context_data(self, *args, **kwargs):
+        ctx = super().get_context_data(*args, **kwargs)
+        ctx['workspace'] = self.kwargs['slug']
+        return ctx
+
 
 class DeleteItem(LoginRequiredMixin, DeleteView):
     model = Item
