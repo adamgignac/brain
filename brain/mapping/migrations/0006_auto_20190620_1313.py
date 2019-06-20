@@ -3,6 +3,18 @@
 from django.db import migrations, models
 
 
+def set_slugs(apps, schema_editor):
+    Workspace = apps.get_model('mapping', 'Workspace')
+    for item in Workspace.objects.all():
+        item.save()
+    ItemType = apps.get_model('mapping', 'ItemType')
+    for item in ItemType.objects.all():
+        item.save()
+    Item = apps.get_model('mapping', 'Item')
+    for item in Item.objects.all():
+        item.save()
+
+
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -10,6 +22,7 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        migrations.RunPython(set_slugs, reverse_code=migrations.RunPython.noop),
         migrations.AlterField(
             model_name='item',
             name='slug',
