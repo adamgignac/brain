@@ -100,6 +100,6 @@
 {% endblock %}
 {% block page_actions %}
 <a class="btn btn-primary btn-xs" href="{% url 'workspace-detail' object.workspace.slug %}">Back to workspace</a>
-<a class="btn btn-primary btn-xs" href="{% url 'update-item' object.slug %}">Edit</a>
-<a class="btn btn-danger btn-xs" href="{% url 'delete-item' object.slug %}">Delete</a>
+<a class="btn btn-primary btn-xs" href="{% url 'update-item' object.workspace.slug object.slug %}">Edit</a>
+<a class="btn btn-danger btn-xs" href="{% url 'delete-item' object.workspace.slug object.slug %}">Delete</a>
 {% endblock %}

@@ -96,7 +96,7 @@ class Item(models.Model):
         return self.label
 
     def get_absolute_url(self):
-        return reverse("item-detail", args=[self.slug])
+        return reverse("item-detail", args=[self.workspace.slug, self.slug])
 
     @property
     def direct_supports(self):
