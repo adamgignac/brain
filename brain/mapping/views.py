@@ -75,7 +75,7 @@ class CreateItem(LoginRequiredMixin, CreateView):
 
     def get_context_data(self, *args, **kwargs):
         ctx = super().get_context_data(*args, **kwargs)
-        ctx['workspace'] = self.kwargs['slug']
+        ctx['workspace'] = self.kwargs['workspace']
         return ctx
 
     def form_valid(self, form):
@@ -91,7 +91,7 @@ class UpdateItem(LoginRequiredMixin, UpdateView):
 
     def get_context_data(self, *args, **kwargs):
         ctx = super().get_context_data(*args, **kwargs)
-        ctx['workspace'] = self.kwargs['slug']
+        ctx['workspace'] = self.kwargs['workspace']
         return ctx
 
 
