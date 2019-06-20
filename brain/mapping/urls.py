@@ -13,7 +13,10 @@ from mapping.views import (
     ItemTypeList,
     CreateItemType,
     UpdateItemType,
-    DeleteItemType
+    DeleteItemType,
+
+    CreateDependency,
+    DeleteDependency,
 )
 
 urlpatterns = [
@@ -29,4 +32,6 @@ urlpatterns = [
     path('items/<slug>/', ItemDetail.as_view(), name='item-detail'),
     path('items/<slug>/edit', UpdateItem.as_view(), name='update-item'),
     path('items/<slug>/delete', DeleteItem.as_view(), name='delete-item'),
+    path('dependencies/<slug>/delete/', DeleteDependency.as_view(), name='delete-dependency'),
+    path('dependencies/<slug>/add/', CreateDependency.as_view(), name='add-dependency'),
 ]
