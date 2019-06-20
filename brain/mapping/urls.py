@@ -16,6 +16,7 @@ from mapping.views import (
     DeleteItemType,
 
     CreateDependency,
+    UpdateDependency,
     DeleteDependency,
 )
 
@@ -32,6 +33,7 @@ urlpatterns = [
     path('items/<slug>/', ItemDetail.as_view(), name='item-detail'),
     path('items/<slug>/edit', UpdateItem.as_view(), name='update-item'),
     path('items/<slug>/delete', DeleteItem.as_view(), name='delete-item'),
-    path('dependencies/<slug>/delete/', DeleteDependency.as_view(), name='delete-dependency'),
-    path('dependencies/<slug>/add/', CreateDependency.as_view(), name='add-dependency'),
+    path('workspaces/<slug>/dependencies/add/', CreateDependency.as_view(), name='add-dependency'),
+    path('workspaces/<slug>/dependencies/<int:pk>/', UpdateDependency.as_view(), name='update-dependency'),
+    path('workspaces/<slug>/dependencies/<int:pk>/delete/', DeleteDependency.as_view(), name='delete-dependency'),
 ]

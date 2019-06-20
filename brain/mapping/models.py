@@ -40,7 +40,13 @@ class Workspace(models.Model):
                 URL=item.get_absolute_url(),
             )
         for dependency in self.relationships.all():
-            graph.edge(str(dependency.item1.pk), str(dependency.item2.pk), dir="back")
+            graph.edge(
+                str(dependency.item1.pk),
+                str(dependency.item2.pk),
+                dir="back",
+                tooltip=dependency.description,
+                URL=dependency.get_absolute_url(),
+            )
         return BeautifulSoup(graph.pipe(), "lxml").find("svg")
 
 
@@ -66,6 +72,10 @@ class Dependency(models.Model):
     item2 = models.ForeignKey(
         "Item", on_delete=models.CASCADE, related_name="depends_on"
     )
+    description = models.CharField(max_length=1024, blank=True, default="")
+
+    def get_absolute_url(self):
+        return reverse('update-dependency', args=[self.workspace.slug, self.pk])
 
 
 class Item(models.Model):

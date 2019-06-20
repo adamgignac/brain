@@ -94,8 +94,7 @@ class DeleteItem(LoginRequiredMixin, DeleteView):
 
 class CreateDependency(LoginRequiredMixin, CreateView):
     model = Dependency
-    fields = ['item1', 'item2']
-    success_url = reverse_lazy('item-type-list')
+    fields = ['item1', 'item2', 'description']
 
     def get_form(self, *args, **kwargs):
         form = super().get_form(*args, **kwargs)
@@ -116,8 +115,7 @@ class CreateDependency(LoginRequiredMixin, CreateView):
 
 class UpdateDependency(LoginRequiredMixin, UpdateView):
     model = Dependency
-    fields = ['item1', 'item2']
-    success_url = reverse_lazy('item-type-list')
+    fields = ['item1', 'item2', 'description']
 
     def get_form(self, *args, **kwargs):
         form = super().get_form(*args, **kwargs)
@@ -138,4 +136,4 @@ class UpdateDependency(LoginRequiredMixin, UpdateView):
 
 class DeleteDependency(LoginRequiredMixin, DeleteView):
     model = Dependency
-    success_url = reverse_lazy('item-type-list')
+    success_url = reverse_lazy('workspace-detail')
