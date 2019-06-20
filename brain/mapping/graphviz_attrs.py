@@ -26,7 +26,7 @@ SHAPES = (
     ('rectangle', "Rectangle"),
     ('square', "Square"),
     ('star', "Star"),
-    ('cylinder', "Cylinder"),
+    ('cylinder', "Cylinder"),  # Broken in GraphViz <2.39
     ('note', "Note"),
     ('tab', "Tab"),
     ('folder', "Folder"),
