@@ -19,20 +19,22 @@
                         <tr>
                             <th>Type</th>
                             <th>Name</th>
+                            <th>Description</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% regroup object.dependencies.all by type as dependencies %}
+                        {% regroup object.depends_on.all by item2.type as dependencies %}
                         {% for type in dependencies %}
-                        {% for item in type.list %}
+                        {% for link in type.list %}
                         <tr>
                             <td>{{ type.grouper }}</td>
-                            <td><a href="{{ item.get_absolute_url }}">{{ item.label }}</a></td>
+                            <td><a href="{{ link.item2.get_absolute_url }}">{{ link.item2.label }}</a></td>
+                            <td>{{ link.description }}</td>
                         </tr>
                         {% endfor %}
                         {% empty %}
                         <tr>
-                            <td colspan="2">None</td>
+                            <td colspan="3">None</td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -61,20 +63,22 @@
                         <tr>
                             <th>Type</th>
                             <th>Name</th>
+                            <th>Description</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% regroup object.direct_supports.all by type as supports %}
+                        {% regroup object.supports.all by item1.type as supports %}
                         {% for type in supports %}
-                        {% for item in type.list %}
+                        {% for link in type.list %}
                         <tr>
                             <td>{{ type.grouper }}</td>
-                            <td><a href="{{ item.get_absolute_url }}">{{ item.label }}</a></td>
+                            <td><a href="{{ link.item1.get_absolute_url }}">{{ link.item1.label }}</a></td>
+                            <td>{{ link.description }}link</td>
                         </tr>
                         {% endfor %}
                         {% empty %}
                         <tr>
-                            <td colspan="2">None</td>
+                            <td colspan="3">None</td>
                         </tr>
                         {% endfor %}
                     </tbody>

@@ -37,6 +37,7 @@ class Workspace(models.Model):
                 shape=item.type.shape,
                 style="filled",
                 fillcolor=item.type.color,
+                tooltip=item.notes,
                 URL=item.get_absolute_url(),
             )
         for dependency in self.relationships.all():
@@ -68,14 +69,14 @@ class Dependency(models.Model):
     workspace = models.ForeignKey(
         Workspace, on_delete=models.CASCADE, related_name="relationships"
     )
-    item1 = models.ForeignKey("Item", on_delete=models.CASCADE, related_name="supports")
+    item1 = models.ForeignKey("Item", on_delete=models.CASCADE, related_name="depends_on")
     item2 = models.ForeignKey(
-        "Item", on_delete=models.CASCADE, related_name="depends_on"
+        "Item", on_delete=models.CASCADE, related_name="supports"
     )
     description = models.CharField(max_length=1024, blank=True, default="")
 
     def get_absolute_url(self):
-        return reverse('update-dependency', args=[self.workspace.slug, self.pk])
+        return reverse("update-dependency", args=[self.workspace.slug, self.pk])
 
 
 class Item(models.Model):
@@ -122,12 +123,18 @@ class Item(models.Model):
                 start.label,
                 shape=start.type.shape,
                 style="filled",
+                tooltip=start.notes,
                 fillcolor=start.type.color,
                 URL=start.get_absolute_url(),
             )
-            for neighbor in start.dependencies.all():
-                graph.edge(str(start.pk), str(neighbor.pk), dir="back")
-                dfs(neighbor)
+            for neighbor in start.depends_on.all():
+                graph.edge(
+                    str(start.pk),
+                    str(neighbor.item2.pk),
+                    tooltip=neighbor.description,
+                    dir="back",
+                )
+                dfs(neighbor.item2)
 
         dfs(self)
         return BeautifulSoup(graph.pipe(), "lxml").find("svg")
@@ -145,12 +152,18 @@ class Item(models.Model):
                 start.label,
                 shape=start.type.shape,
                 style="filled",
+                tooltip=start.notes,
                 fillcolor=start.type.color,
                 URL=start.get_absolute_url(),
             )
-            for neighbor in start.direct_supports.all():
-                graph.edge(str(neighbor.pk), str(start.pk), dir="back")
-                dfs(neighbor)
+            for neighbor in start.supports.all():
+                graph.edge(
+                    str(neighbor.item1.pk),
+                    str(start.pk),
+                    tooltip=neighbor.description,
+                    dir="back",
+                )
+                dfs(neighbor.item1)
 
         dfs(self)
         return BeautifulSoup(graph.pipe(), "lxml").find("svg")
