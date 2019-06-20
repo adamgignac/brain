@@ -29,7 +29,7 @@ class Workspace(models.Model):
         return reverse("workspace-detail", args=[self.slug])
 
     def graphviz_graph(self):
-        graph = Digraph(comment=self.label, format="svg")
+        graph = Digraph(comment=self.label, format="svg", name=self.label)
         for item in self.items.all():
             graph.node(
                 str(item.pk),
@@ -111,7 +111,7 @@ class Item(models.Model):
         )
 
     def full_dependency_graph(self):
-        graph = Digraph(comment=self.label + " Dependencies", format="svg")
+        graph = Digraph(name=self.label + " Dependencies", format="svg")
         visited = []
 
         def dfs(start):
@@ -140,7 +140,7 @@ class Item(models.Model):
         return BeautifulSoup(graph.pipe(), "lxml").find("svg")
 
     def full_support_graph(self):
-        graph = Digraph(comment=self.label + " Supports", format="svg")
+        graph = Digraph(name=self.label + " Supports", format="svg")
         visited = []
 
         def dfs(start):
