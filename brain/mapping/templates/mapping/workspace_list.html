@@ -16,12 +16,12 @@
                         {% for workspace in object_list %}
                         <tr>
                             <td>
-                                <a href="{% url 'workspace-detail' workspace.pk %}">{{ workspace.label }}</a>
+                                <a href="{% url 'workspace-detail' workspace.slug %}">{{ workspace.label }}</a>
                             </td>
                             <td>
                                 {{ workspace.owner }}
                                 {% if workspace.owner == request.user %}
-                                <a class="btn btn-danger btn-xs pull-right" href="{% url 'delete-workspace' workspace.pk %}">Delete</a>
+                                <a class="btn btn-danger btn-xs pull-right" href="{% url 'delete-workspace' workspace.slug %}">Delete</a>
                                 {% endif %}
                             </td>
                         </tr>

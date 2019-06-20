@@ -23,7 +23,7 @@
 <ul class="sidebar-menu">
     {% for workspace in workspaces.public %}
     <li>
-        <a href="{% url 'workspace-detail' workspace.pk %}">
+        <a href="{% url 'workspace-detail' workspace.slug %}">
             <i class="fa fa-unlock"></i> <span>{{ workspace.label }}</span>
         </a>
     </li>
@@ -34,7 +34,7 @@
 <ul class="sidebar-menu">
     {% for workspace in workspaces.private %}
     <li>
-        <a href="{% url 'workspace-detail' workspace.pk %}">
+        <a href="{% url 'workspace-detail' workspace.slug %}">
             <i class="fa fa-lock"></i> <span>{{ workspace.label }}</span>
         </a>
     </li>

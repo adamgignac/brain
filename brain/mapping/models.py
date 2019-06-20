@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
+from django.utils.text import slugify
 
 from bs4 import BeautifulSoup
 
@@ -15,12 +16,17 @@ class Workspace(models.Model):
     label = models.CharField(max_length=1024)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     public = models.BooleanField(default=False)
+    slug = models.SlugField(unique=True, editable=False)
+
+    def save(self, *args, **kwargs):
+        self.slug = f'{self.id}-{slugify(self.label)}'
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.label
 
     def get_absolute_url(self):
-        return reverse('workspace-detail', args=[self.pk])
+        return reverse('workspace-detail', args=[self.slug])
 
     def graphviz_graph(self):
         graph = Digraph(comment=self.label, format="svg")
@@ -39,6 +45,11 @@ class ItemType(models.Model):
     label = models.CharField(max_length=1024)
     shape = models.CharField(max_length=15, choices=SHAPES)
     color = models.CharField(max_length=15, choices=COLORS, default='white')
+    slug = models.SlugField(unique=True, editable=False)
+
+    def save(self, *args, **kwargs):
+        self.slug = f'{self.id}-{slugify(self.label)}'
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.label
@@ -51,12 +62,17 @@ class Item(models.Model):
     dependencies = models.ManyToManyField("self", blank=True,
                                           symmetrical=False)
     notes = models.TextField(blank=True)
+    slug = models.SlugField(unique=True, editable=False)
+
+    def save(self, *args, **kwargs):
+        self.slug = f'{self.id}-{slugify(self.label)}'
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.label
 
     def get_absolute_url(self):
-        return reverse('item-detail', args=[self.pk])
+        return reverse('item-detail', args=[self.slug])
 
     @property
     def direct_supports(self):

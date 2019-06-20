@@ -27,7 +27,7 @@
                         {% for item in type.list %}
                         <tr>
                             <td>{{ type.grouper }}</td>
-                            <td><a href="{% url 'item-detail' item.pk %}">{{ item.label }}</a></td>
+                            <td><a href="{{ item.get_absolute_url }}">{{ item.label }}</a></td>
                         </tr>
                         {% endfor %}
                         {% empty %}
@@ -69,7 +69,7 @@
                         {% for item in type.list %}
                         <tr>
                             <td>{{ type.grouper }}</td>
-                            <td><a href="{% url 'item-detail' item.pk %}">{{ item.label }}</a></td>
+                            <td><a href="{{ item.get_absolute_url }}">{{ item.label }}</a></td>
                         </tr>
                         {% endfor %}
                         {% empty %}
@@ -95,7 +95,7 @@
 </div>
 {% endblock %}
 {% block page_actions %}
-<a class="btn btn-primary btn-xs" href="{% url 'workspace-detail' object.workspace.pk %}">Back to workspace</a>
-<a class="btn btn-primary btn-xs" href="{% url 'update-item' object.pk %}">Edit</a>
-<a class="btn btn-danger btn-xs" href="{% url 'delete-item' object.pk %}">Delete</a>
+<a class="btn btn-primary btn-xs" href="{% url 'workspace-detail' object.workspace.slug %}">Back to workspace</a>
+<a class="btn btn-primary btn-xs" href="{% url 'update-item' object.slug %}">Edit</a>
+<a class="btn btn-danger btn-xs" href="{% url 'delete-item' object.slug %}">Delete</a>
 {% endblock %}
