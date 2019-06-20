@@ -8,7 +8,7 @@ class ItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Item
-        fields = ("type", "label", "dependencies", "notes", "workspace")
+        fields = ("type", "label", "dependencies", "notes", "workspace", "slug")
 
 
 class WorkspaceSerializer(serializers.ModelSerializer):
@@ -17,4 +17,4 @@ class WorkspaceSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Workspace
-        fields = ("label", "owner", "public", "items")
+        fields = ("label", "owner", "public", "items", "slug")
