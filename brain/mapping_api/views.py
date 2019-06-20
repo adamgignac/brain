@@ -5,7 +5,12 @@ from rest_framework import viewsets
 
 class WorkspaceViewSet(viewsets.ModelViewSet):
     serializer_class = WorkspaceSerializer
-    queryset = Workspace.objects.filter(public=True)
+
+    def get_queryset(self):
+        spaces = Workspace.objects.filter(public=True)
+        if self.request.user.is_authenticated:
+            spaces |= Workspace.objects.filter(owner=self.request.user)
+        return spaces
 
 
 class ItemViewSet(viewsets.ModelViewSet):

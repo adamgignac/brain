@@ -16,17 +16,13 @@ Including another URLconf
 from django.urls import path, include
 
 import mapping.urls
-from mapping_api import views as api_views
-from rest_framework import routers
+import mapping_api.urls
 from django.contrib.auth.views import LoginView, LogoutView
 
-router = routers.DefaultRouter()
-router.register(r'workspaces', api_views.WorkspaceViewSet)
-router.register(r'items', api_views.ItemViewSet)
 
 urlpatterns = [
     path('', include(mapping.urls)),
     path('login/', LoginView.as_view(template_name="adminlte/login.html"), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
-    path('api/v1/', include((router.urls, 'api'))),
+    path('api/v1/', include((mapping_api.urls, 'api'))),
 ]
