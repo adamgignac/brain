@@ -8,11 +8,18 @@
 {% endblock %}
 
 {% block content %}
-<form action="" method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input class="btn btn-primary" type="submit" value="{% if object.pk %}Save{% else %}Create{% endif %}" />
-</form>
+<div class="row">
+    <div class="col-sm-4">
+        <div class="box">
+            <div class="box-body">
+                <form action="" method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input class="btn btn-primary" type="submit" value="{% if object.pk %}Save{% else %}Create{% endif %}" />
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block page_actions %}

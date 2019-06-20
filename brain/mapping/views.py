@@ -93,6 +93,9 @@ class DeleteItem(LoginRequiredMixin, DeleteView):
 
 
 class DependencyEditorMixin:
+    model = Dependency
+    fields = ['item1', 'item2', 'description']
+
     def get_context_data(self, *args, **kwargs):
         ctx = super().get_context_data(*args, **kwargs)
         ctx['workspace'] = self.kwargs['workspace']
@@ -119,13 +122,11 @@ class DependencyEditorMixin:
 
 
 class CreateDependency(DependencyEditorMixin, LoginRequiredMixin, CreateView):
-    model = Dependency
-    fields = ['item1', 'item2', 'description']
+    pass
 
 
 class UpdateDependency(DependencyEditorMixin, LoginRequiredMixin, UpdateView):
-    model = Dependency
-    fields = ['item1', 'item2', 'description']
+    pass
 
 
 class DeleteDependency(LoginRequiredMixin, DeleteView):

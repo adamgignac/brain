@@ -13,3 +13,13 @@ svg a {
 {% endblock %}
 {% block body_class %}skin-yellow-light{% endblock %}
 {% block title %}Brain{% endblock %}
+
+{% block javascript %}
+{{ block.super }}
+<script type="application/javascript">
+$(() => {
+    $("form p").addClass("form-group");
+    $(".form-group input:not(:checkbox), .form-group select, .form-group textarea").addClass("form-control");
+});
+</script>
+{% endblock %}
