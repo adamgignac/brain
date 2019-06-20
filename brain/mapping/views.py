@@ -75,7 +75,7 @@ class CreateItem(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         obj = form.save(commit=False)
-        obj.workspace = Workspace.objects.get(slug=self.kwargs['slug'])
+        obj.workspace = Workspace.objects.get(slug=self.kwargs['workspace'])
         obj.save()
         return HttpResponseRedirect(obj.workspace.get_absolute_url())
 
@@ -92,13 +92,18 @@ class DeleteItem(LoginRequiredMixin, DeleteView):
         return self.object.workspace.get_absolute_url()
 
 
-class CreateDependency(LoginRequiredMixin, CreateView):
-    model = Dependency
-    fields = ['item1', 'item2', 'description']
+class DependencyEditorMixin:
+    def get_context_data(self, *args, **kwargs):
+        ctx = super().get_context_data(*args, **kwargs)
+        ctx['workspace'] = self.kwargs['workspace']
+        return ctx
+
+    def get_workspace(self):
+        return Workspace.objects.get(slug=self.kwargs['workspace'])
 
     def get_form(self, *args, **kwargs):
         form = super().get_form(*args, **kwargs)
-        workspace = Workspace.objects.get(slug=self.kwargs['slug'])
+        workspace = self.get_workspace()
         items = Item.objects.filter(workspace=workspace)
         form.fields['item1'].queryset = items
         form.fields['item1'].label = "Item"
@@ -108,32 +113,23 @@ class CreateDependency(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         obj = form.save(commit=False)
-        obj.workspace = Workspace.objects.get(slug=self.kwargs['slug'])
+        obj.workspace = self.get_workspace()
         obj.save()
         return HttpResponseRedirect(obj.workspace.get_absolute_url())
 
 
-class UpdateDependency(LoginRequiredMixin, UpdateView):
+class CreateDependency(DependencyEditorMixin, LoginRequiredMixin, CreateView):
     model = Dependency
     fields = ['item1', 'item2', 'description']
 
-    def get_form(self, *args, **kwargs):
-        form = super().get_form(*args, **kwargs)
-        workspace = Workspace.objects.get(slug=self.kwargs['slug'])
-        items = Item.objects.filter(workspace=workspace)
-        form.fields['item1'].queryset = items
-        form.fields['item1'].label = "Item"
-        form.fields['item2'].queryset = items
-        form.fields['item2'].label = "Depends On"
-        return form
 
-    def form_valid(self, form):
-        obj = form.save(commit=False)
-        obj.workspace = Workspace.objects.get(slug=self.kwargs['slug'])
-        obj.save()
-        return HttpResponseRedirect(obj.workspace.get_absolute_url())
+class UpdateDependency(DependencyEditorMixin, LoginRequiredMixin, UpdateView):
+    model = Dependency
+    fields = ['item1', 'item2', 'description']
 
 
 class DeleteDependency(LoginRequiredMixin, DeleteView):
     model = Dependency
-    success_url = reverse_lazy('workspace-detail')
+
+    def get_success_url(self):
+        return reverse_lazy('workspace-detail', args=[self.kwargs['workspace']])
