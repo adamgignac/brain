@@ -21,3 +21,11 @@
     </div>
 </div>
 {% endblock %}
+
+{% block page_actions %}
+        <a class="btn btn-primary btn-xs" href="{% url 'workspace-detail' workspace %}">Back to workspace</a>
+        {% if object.pk %}
+            <a class="btn btn-danger btn-xs" href="{% url 'delete-dependency' workspace object.pk %}">Delete
+        </a>
+        {% endif %}
+{% endblock %}

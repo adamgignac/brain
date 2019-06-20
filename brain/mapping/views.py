@@ -73,6 +73,11 @@ class CreateItem(LoginRequiredMixin, CreateView):
     model = Item
     fields = ['type', 'label', 'notes']
 
+    def get_context_data(self, *args, **kwargs):
+        ctx = super().get_context_data(*args, **kwargs)
+        ctx['workspace'] = self.kwargs['slug']
+        return ctx
+
     def form_valid(self, form):
         obj = form.save(commit=False)
         obj.workspace = Workspace.objects.get(slug=self.kwargs['workspace'])
