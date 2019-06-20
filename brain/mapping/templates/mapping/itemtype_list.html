@@ -16,11 +16,11 @@
                         {% for object in object_list %}
                         <tr>
                             <td>
-                                <a href="{% url 'edit-item-type' object.pk %}">{{ object.label }}</a>
+                                <a href="{% url 'edit-item-type' object.slug %}">{{ object.label }}</a>
                             </td>
                             <td>
                                 {{ object.get_color_display }} {{ object.get_shape_display }}
-                                <a class="btn btn-danger btn-xs pull-right" href="{% url 'delete-item-type' object.pk %}">Delete</a>
+                                <a class="btn btn-danger btn-xs pull-right" href="{% url 'delete-item-type' object.slug %}">Delete</a>
                             </td>
                         </tr>
                         {% endfor %}
