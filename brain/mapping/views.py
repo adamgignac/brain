@@ -30,7 +30,7 @@ class WorkspaceDetail(DetailView):
 
 class CreateWorkspace(LoginRequiredMixin, CreateView):
     model = Workspace
-    fields = ['label', 'public']
+    fields = ['label', 'public', 'engine']
 
     def form_valid(self, form):
         obj = form.save(commit=False)

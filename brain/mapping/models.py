@@ -17,6 +17,7 @@ class Workspace(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     public = models.BooleanField(default=False)
     slug = models.SlugField(unique=True, editable=False)
+    engine = models.CharField(default="dot", choices=[("dot", "Dot (flows bottom to top)"), ("neato", "Neato (radial)")], max_length=10)
 
     def save(self, *args, **kwargs):
         self.slug = f"{self.id}-{slugify(self.label)}"
@@ -29,7 +30,7 @@ class Workspace(models.Model):
         return reverse("workspace-detail", args=[self.slug])
 
     def graphviz_graph(self):
-        graph = Digraph(comment=self.label, format="svg", name=self.label)
+        graph = Digraph(comment=self.label, format="svg", name=self.label, engine=self.engine, graph_attr={"overlap": "false"})
         for item in self.items.all():
             graph.node(
                 str(item.pk),
