@@ -12,11 +12,12 @@ python_version = "3.7"
 
 [dev-packages]
 
+prospector = "*"
 
 
 [packages]
 
-django = ">=2.1.5"
+Django = ">=2.1.5"
 "django-adminlte2" = "*"
 graphviz = "*"
 "beautifulsoup4" = "*"

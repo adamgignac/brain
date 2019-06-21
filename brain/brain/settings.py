@@ -93,7 +93,11 @@ if os.environ.get("AUTH_URL"):
     LDAP_AUTH_USER_TLS = True
 
     if LDAP_AUTH_OBJECT_CLASS == "posixAccount":
-        LDAP_AUTH_USER_FIELDS = {"username": "cn", "email": "mail", "full_name": "gecos"}
+        LDAP_AUTH_USER_FIELDS = {
+            "username": "cn",
+            "email": "mail",
+            "full_name": "gecos",
+        }
     # TODO: What other types should we support besides inetOrgPerson/User and posixAccount?
 
     def LDAP_AUTH_CLEAN_USER_DATA(data):

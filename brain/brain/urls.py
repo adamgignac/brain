@@ -21,8 +21,10 @@ from django.contrib.auth.views import LoginView, LogoutView
 
 
 urlpatterns = [
-    path('', include(mapping.urls)),
-    path('login/', LoginView.as_view(template_name="adminlte/login.html"), name='login'),
-    path('logout/', LogoutView.as_view(), name='logout'),
-    path('api/v1/', include((mapping_api.urls, 'api'))),
+    path("", include(mapping.urls)),
+    path(
+        "login/", LoginView.as_view(template_name="adminlte/login.html"), name="login"
+    ),
+    path("logout/", LogoutView.as_view(), name="logout"),
+    path("api/v1/", include((mapping_api.urls, "api"))),
 ]
