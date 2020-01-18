@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DEBUG", "on") == "on"
 
 ALLOWED_HOSTS = ["*"]
 
@@ -98,7 +98,8 @@ if os.environ.get("AUTH_URL"):
             "email": "mail",
             "full_name": "gecos",
         }
-    # TODO: What other types should we support besides inetOrgPerson/User and posixAccount?
+    # TODO: What other types should we support besides
+    # inetOrgPerson/User and posixAccount?
 
     def LDAP_AUTH_CLEAN_USER_DATA(data):
         name = data.pop("full_name", "")
