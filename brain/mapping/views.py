@@ -29,7 +29,7 @@ class WorkspaceDetail(DetailView):
 
 class CreateWorkspace(LoginRequiredMixin, CreateView):
     model = Workspace
-    fields = ['label', 'public', 'engine']
+    fields = ["label", "public", "engine"]
 
     def form_valid(self, form):
         obj = form.save(commit=False)
@@ -44,24 +44,24 @@ class ItemTypeList(ListView):
 
 class CreateItemType(LoginRequiredMixin, CreateView):
     model = ItemType
-    fields = ['label', 'shape', 'color']
-    success_url = reverse_lazy('item-type-list')
+    fields = ["label", "shape", "color"]
+    success_url = reverse_lazy("item-type-list")
 
 
 class UpdateItemType(LoginRequiredMixin, UpdateView):
     model = ItemType
-    fields = ['label', 'shape', 'color']
-    success_url = reverse_lazy('item-type-list')
+    fields = ["label", "shape", "color"]
+    success_url = reverse_lazy("item-type-list")
 
 
 class DeleteItemType(LoginRequiredMixin, DeleteView):
     model = ItemType
-    success_url = reverse_lazy('item-type-list')
+    success_url = reverse_lazy("item-type-list")
 
 
 class DeleteWorkspace(LoginRequiredMixin, DeleteView):
     model = Workspace
-    success_url = reverse_lazy('workspace-list')
+    success_url = reverse_lazy("workspace-list")
 
 
 class ItemDetail(DetailView):
@@ -70,27 +70,27 @@ class ItemDetail(DetailView):
 
 class CreateItem(LoginRequiredMixin, CreateView):
     model = Item
-    fields = ['type', 'label', 'notes']
+    fields = ["type", "label", "notes"]
 
     def get_context_data(self, *args, **kwargs):
         ctx = super().get_context_data(*args, **kwargs)
-        ctx['workspace'] = self.kwargs['workspace']
+        ctx["workspace"] = self.kwargs["workspace"]
         return ctx
 
     def form_valid(self, form):
         obj = form.save(commit=False)
-        obj.workspace = Workspace.objects.get(slug=self.kwargs['workspace'])
+        obj.workspace = Workspace.objects.get(slug=self.kwargs["workspace"])
         obj.save()
         return HttpResponseRedirect(obj.workspace.get_absolute_url())
 
 
 class UpdateItem(LoginRequiredMixin, UpdateView):
     model = Item
-    fields = ['label', 'notes']
+    fields = ["label", "notes"]
 
     def get_context_data(self, *args, **kwargs):
         ctx = super().get_context_data(*args, **kwargs)
-        ctx['workspace'] = self.kwargs['workspace']
+        ctx["workspace"] = self.kwargs["workspace"]
         return ctx
 
 
@@ -103,24 +103,24 @@ class DeleteItem(LoginRequiredMixin, DeleteView):
 
 class DependencyEditorMixin:
     model = Dependency
-    fields = ['item1', 'item2', 'description']
+    fields = ["item1", "item2", "description"]
 
     def get_context_data(self, *args, **kwargs):
         ctx = super().get_context_data(*args, **kwargs)
-        ctx['workspace'] = self.kwargs['workspace']
+        ctx["workspace"] = self.kwargs["workspace"]
         return ctx
 
     def get_workspace(self):
-        return Workspace.objects.get(slug=self.kwargs['workspace'])
+        return Workspace.objects.get(slug=self.kwargs["workspace"])
 
     def get_form(self, *args, **kwargs):
         form = super().get_form(*args, **kwargs)
         workspace = self.get_workspace()
         items = Item.objects.filter(workspace=workspace)
-        form.fields['item1'].queryset = items
-        form.fields['item1'].label = "Item"
-        form.fields['item2'].queryset = items
-        form.fields['item2'].label = "Depends On"
+        form.fields["item1"].queryset = items
+        form.fields["item1"].label = "Item"
+        form.fields["item2"].queryset = items
+        form.fields["item2"].label = "Depends On"
         return form
 
     def form_valid(self, form):
@@ -142,4 +142,4 @@ class DeleteDependency(LoginRequiredMixin, DeleteView):
     model = Dependency
 
     def get_success_url(self):
-        return reverse_lazy('workspace-detail', args=[self.kwargs['workspace']])
+        return reverse_lazy("workspace-detail", args=[self.kwargs["workspace"]])

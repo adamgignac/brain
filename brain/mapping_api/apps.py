@@ -5,4 +5,4 @@ from django.apps import AppConfig
 
 
 class MappingAPIConfig(AppConfig):
-    name = 'mapping_api'
+    name = "mapping_api"

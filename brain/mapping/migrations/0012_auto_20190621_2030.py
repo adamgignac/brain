@@ -6,24 +6,34 @@ import django.db.models.deletion
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('mapping', '0011_dependency_description'),
-    ]
+    dependencies = [("mapping", "0011_dependency_description")]
 
     operations = [
         migrations.AddField(
-            model_name='workspace',
-            name='engine',
-            field=models.CharField(choices=[('dot', 'Dot'), ('neato', 'Neato')], default='dot', max_length=10),
+            model_name="workspace",
+            name="engine",
+            field=models.CharField(
+                choices=[("dot", "Dot"), ("neato", "Neato")],
+                default="dot",
+                max_length=10,
+            ),
         ),
         migrations.AlterField(
-            model_name='dependency',
-            name='item1',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='depends_on', to='mapping.Item'),
+            model_name="dependency",
+            name="item1",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="depends_on",
+                to="mapping.Item",
+            ),
         ),
         migrations.AlterField(
-            model_name='dependency',
-            name='item2',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='supports', to='mapping.Item'),
+            model_name="dependency",
+            name="item2",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="supports",
+                to="mapping.Item",
+            ),
         ),
     ]

@@ -5,24 +5,22 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('mapping', '0006_auto_20190620_1313'),
-    ]
+    dependencies = [("mapping", "0006_auto_20190620_1313")]
 
     operations = [
         migrations.AlterField(
-            model_name='item',
-            name='slug',
+            model_name="item",
+            name="slug",
             field=models.SlugField(editable=False, unique=True),
         ),
         migrations.AlterField(
-            model_name='itemtype',
-            name='slug',
+            model_name="itemtype",
+            name="slug",
             field=models.SlugField(editable=False, unique=True),
         ),
         migrations.AlterField(
-            model_name='workspace',
-            name='slug',
+            model_name="workspace",
+            name="slug",
             field=models.SlugField(editable=False, unique=True),
         ),
     ]

@@ -5,15 +5,13 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('mapping', '0003_auto_20190619_1801'),
-    ]
+    dependencies = [("mapping", "0003_auto_20190619_1801")]
 
     operations = [
         migrations.AddField(
-            model_name='workspace',
-            name='slug',
-            field=models.SlugField(default=''),
+            model_name="workspace",
+            name="slug",
+            field=models.SlugField(default=""),
             preserve_default=False,
-        ),
+        )
     ]

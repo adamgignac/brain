@@ -17,7 +17,11 @@ class Workspace(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     public = models.BooleanField(default=False)
     slug = models.SlugField(unique=True, editable=False)
-    engine = models.CharField(default="dot", choices=[("dot", "Dot (flows bottom to top)"), ("neato", "Neato (radial)")], max_length=10)
+    engine = models.CharField(
+        default="dot",
+        choices=[("dot", "Dot (flows bottom to top)"), ("neato", "Neato (radial)")],
+        max_length=10,
+    )
 
     def save(self, *args, **kwargs):
         self.slug = f"{self.id}-{slugify(self.label)}"
@@ -30,7 +34,13 @@ class Workspace(models.Model):
         return reverse("workspace-detail", args=[self.slug])
 
     def graphviz_graph(self):
-        graph = Digraph(comment=self.label, format="svg", name=self.label, engine=self.engine, graph_attr={"overlap": "false"})
+        graph = Digraph(
+            comment=self.label,
+            format="svg",
+            name=self.label,
+            engine=self.engine,
+            graph_attr={"overlap": "false"},
+        )
         for item in self.items.all():
             graph.node(
                 str(item.pk),
@@ -70,10 +80,10 @@ class Dependency(models.Model):
     workspace = models.ForeignKey(
         Workspace, on_delete=models.CASCADE, related_name="relationships"
     )
-    item1 = models.ForeignKey("Item", on_delete=models.CASCADE, related_name="depends_on")
-    item2 = models.ForeignKey(
-        "Item", on_delete=models.CASCADE, related_name="supports"
+    item1 = models.ForeignKey(
+        "Item", on_delete=models.CASCADE, related_name="depends_on"
     )
+    item2 = models.ForeignKey("Item", on_delete=models.CASCADE, related_name="supports")
     description = models.CharField(max_length=1024, blank=True, default="")
 
     def get_absolute_url(self):

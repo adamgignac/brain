@@ -5,14 +5,12 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('mapping', '0010_remove_item_dependencies'),
-    ]
+    dependencies = [("mapping", "0010_remove_item_dependencies")]
 
     operations = [
         migrations.AddField(
-            model_name='dependency',
-            name='description',
-            field=models.CharField(blank=True, default='', max_length=1024),
-        ),
+            model_name="dependency",
+            name="description",
+            field=models.CharField(blank=True, default="", max_length=1024),
+        )
     ]

@@ -9,46 +9,130 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-    ]
+    dependencies = [migrations.swappable_dependency(settings.AUTH_USER_MODEL)]
 
     operations = [
         migrations.CreateModel(
-            name='Item',
+            name="Item",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('label', models.CharField(max_length=1024)),
-                ('notes', models.TextField(blank=True)),
-                ('dependencies', models.ManyToManyField(blank=True, to='mapping.Item')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("label", models.CharField(max_length=1024)),
+                ("notes", models.TextField(blank=True)),
+                ("dependencies", models.ManyToManyField(blank=True, to="mapping.Item")),
             ],
         ),
         migrations.CreateModel(
-            name='ItemType',
+            name="ItemType",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('label', models.CharField(max_length=1024)),
-                ('shape', models.CharField(choices=[('box', 'Box'), ('ellipse', 'Ellipse'), ('oval', 'Oval'), ('circle', 'Circle'), ('point', 'Point'), ('egg', 'Egg'), ('triangle', 'Triangle'), ('diamond', 'Diamond'), ('trapezium', 'Trapezium'), ('parallelogram', 'Parallelogram'), ('house', 'House'), ('pentagon', 'Pentagon'), ('hexagon', 'Hexagon'), ('septagon', 'Septagon'), ('octagon', 'Octagon'), ('doublecircle', 'Double Circle'), ('doubleoctagon', 'Double Octagon'), ('tripleoctagon', 'Triple Octagon'), ('invtriangle', 'Inverted Triangle'), ('invtrapezium', 'Inverted Trapezium'), ('invhouse', 'Inverted House'), ('Mdiamond', 'Fancy Diamond'), ('Msquare', 'Fancy Square'), ('Mcircle', 'Fancy Circle'), ('rectangle', 'Rectangle'), ('square', 'Square'), ('star', 'Star'), ('cylinder', 'Cylinder'), ('note', 'Note'), ('tab', 'Tab'), ('folder', 'Folder'), ('box3d', '3D Box')], max_length=15)),
-                ('color', models.CharField(choices=[('white', 'White'), ('cyan', 'Cyan'), ('yellow', 'Yellow'), ('red', 'Red'), ('lightgray', 'Gray')], default='white', max_length=15)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("label", models.CharField(max_length=1024)),
+                (
+                    "shape",
+                    models.CharField(
+                        choices=[
+                            ("box", "Box"),
+                            ("ellipse", "Ellipse"),
+                            ("oval", "Oval"),
+                            ("circle", "Circle"),
+                            ("point", "Point"),
+                            ("egg", "Egg"),
+                            ("triangle", "Triangle"),
+                            ("diamond", "Diamond"),
+                            ("trapezium", "Trapezium"),
+                            ("parallelogram", "Parallelogram"),
+                            ("house", "House"),
+                            ("pentagon", "Pentagon"),
+                            ("hexagon", "Hexagon"),
+                            ("septagon", "Septagon"),
+                            ("octagon", "Octagon"),
+                            ("doublecircle", "Double Circle"),
+                            ("doubleoctagon", "Double Octagon"),
+                            ("tripleoctagon", "Triple Octagon"),
+                            ("invtriangle", "Inverted Triangle"),
+                            ("invtrapezium", "Inverted Trapezium"),
+                            ("invhouse", "Inverted House"),
+                            ("Mdiamond", "Fancy Diamond"),
+                            ("Msquare", "Fancy Square"),
+                            ("Mcircle", "Fancy Circle"),
+                            ("rectangle", "Rectangle"),
+                            ("square", "Square"),
+                            ("star", "Star"),
+                            ("cylinder", "Cylinder"),
+                            ("note", "Note"),
+                            ("tab", "Tab"),
+                            ("folder", "Folder"),
+                            ("box3d", "3D Box"),
+                        ],
+                        max_length=15,
+                    ),
+                ),
+                (
+                    "color",
+                    models.CharField(
+                        choices=[
+                            ("white", "White"),
+                            ("cyan", "Cyan"),
+                            ("yellow", "Yellow"),
+                            ("red", "Red"),
+                            ("lightgray", "Gray"),
+                        ],
+                        default="white",
+                        max_length=15,
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='Workspace',
+            name="Workspace",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('label', models.CharField(max_length=1024)),
-                ('public', models.BooleanField(default=False)),
-                ('owner', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("label", models.CharField(max_length=1024)),
+                ("public", models.BooleanField(default=False)),
+                (
+                    "owner",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
         migrations.AddField(
-            model_name='item',
-            name='type',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='mapping.ItemType'),
+            model_name="item",
+            name="type",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to="mapping.ItemType"
+            ),
         ),
         migrations.AddField(
-            model_name='item',
-            name='workspace',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='mapping.Workspace'),
+            model_name="item",
+            name="workspace",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to="mapping.Workspace"
+            ),
         ),
     ]

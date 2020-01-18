@@ -4,38 +4,30 @@ from django.db import migrations, models
 
 
 def set_slugs(apps, schema_editor):
-    Workspace = apps.get_model('mapping', 'Workspace')
+    Workspace = apps.get_model("mapping", "Workspace")
     for item in Workspace.objects.all():
         item.save()
-    ItemType = apps.get_model('mapping', 'ItemType')
+    ItemType = apps.get_model("mapping", "ItemType")
     for item in ItemType.objects.all():
         item.save()
-    Item = apps.get_model('mapping', 'Item')
+    Item = apps.get_model("mapping", "Item")
     for item in Item.objects.all():
         item.save()
 
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('mapping', '0005_auto_20190620_1311'),
-    ]
+    dependencies = [("mapping", "0005_auto_20190620_1311")]
 
     operations = [
         migrations.RunPython(set_slugs, reverse_code=migrations.RunPython.noop),
         migrations.AlterField(
-            model_name='item',
-            name='slug',
-            field=models.SlugField(unique=True),
+            model_name="item", name="slug", field=models.SlugField(unique=True)
         ),
         migrations.AlterField(
-            model_name='itemtype',
-            name='slug',
-            field=models.SlugField(unique=True),
+            model_name="itemtype", name="slug", field=models.SlugField(unique=True)
         ),
         migrations.AlterField(
-            model_name='workspace',
-            name='slug',
-            field=models.SlugField(unique=True),
+            model_name="workspace", name="slug", field=models.SlugField(unique=True)
         ),
     ]

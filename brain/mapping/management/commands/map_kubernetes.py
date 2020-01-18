@@ -26,7 +26,7 @@ class Command(BaseCommand):
             "kubernetes",
             action="store",
             type=str,
-            help="Base URL for Kubernetes API host"
+            help="Base URL for Kubernetes API host",
         )
 
     def get_workspace(self):
@@ -44,7 +44,9 @@ class Command(BaseCommand):
 
     def get_item_types(self):
         if not ItemType.objects.filter(label="Kubernetes Namespace").exists():
-            namespace_type = ItemType(label="Kubernetes Namespace", color="gray", shape="box")
+            namespace_type = ItemType(
+                label="Kubernetes Namespace", color="gray", shape="box"
+            )
             namespace_type.save()
             print("Created Kubernetes Namespace item type")
         else:
@@ -52,7 +54,9 @@ class Command(BaseCommand):
             print("Found existing Kubernetes Namespace item type")
 
         if not ItemType.objects.filter(label="Kubernetes Deployment").exists():
-            deployment_type = ItemType(label="Kubernetes Deployment", color="white", shape="box")
+            deployment_type = ItemType(
+                label="Kubernetes Deployment", color="white", shape="box"
+            )
             deployment_type.save()
             print("Created Kubernetes Deployment item type")
         else:
@@ -64,12 +68,20 @@ class Command(BaseCommand):
         workspace = self.get_workspace()
         NAMESPACE, DEPLOYMENT = self.get_item_types()
         print(f"Scanning {options['kubernetes']} into {workspace.label}...")
-        k8s = Kubernetes(options['kubernetes'])
+        k8s = Kubernetes(options["kubernetes"])
         print("Found the following namespaces:")
         for namespace in k8s.list_namespaces():
-            print(namespace['name'])
-            ns, _ = Item.objects.get_or_create(label=namespace['name'], type=NAMESPACE, workspace=workspace)
-            for deployment in k8s.deployments_in_namespace(namespace['name']):
-                print("-", deployment['name'])
-                dep, _ = Item.objects.get_or_create(label=f"{namespace['name']}:{deployment['name']}", type=DEPLOYMENT, workspace=workspace)
-                _ = Dependency.objects.get_or_create(item1=dep, item2=ns, workspace=workspace)
+            print(namespace["name"])
+            ns, _ = Item.objects.get_or_create(
+                label=namespace["name"], type=NAMESPACE, workspace=workspace
+            )
+            for deployment in k8s.deployments_in_namespace(namespace["name"]):
+                print("-", deployment["name"])
+                dep, _ = Item.objects.get_or_create(
+                    label=f"{namespace['name']}:{deployment['name']}",
+                    type=DEPLOYMENT,
+                    workspace=workspace,
+                )
+                _ = Dependency.objects.get_or_create(
+                    item1=dep, item2=ns, workspace=workspace
+                )
