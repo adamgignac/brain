@@ -8,7 +8,6 @@ from django.views.generic import (
     DeleteView,
     ListView,
 )
-from django.views.generic.edit import FormMixin
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin
